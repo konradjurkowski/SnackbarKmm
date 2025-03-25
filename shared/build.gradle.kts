@@ -61,7 +61,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.konradjurkowski",
         artifactId = "snackbarkmm",
-        version = "0.0.1"
+        version = "0.0.2"
     )
 
     pom {
@@ -91,6 +91,5 @@ mavenPublishing {
     }
 
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-
     signAllPublications()
 }
