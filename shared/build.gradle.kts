@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -5,6 +6,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    id("com.vanniktech.maven.publish") version "0.31.0"
 }
 
 kotlin {
@@ -12,6 +14,7 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
+        publishLibraryVariants("release", "debug")
     }
     
     listOf(
@@ -20,7 +23,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            baseName = "snackbarkmm"
             isStatic = true
         }
     }
@@ -43,7 +46,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.konradjurkowski.snackbarkmm"
+    namespace = "io.github.konradjurkowski"
     compileSdk = 35
     defaultConfig {
         minSdk = 26
@@ -52,4 +55,42 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+
+mavenPublishing {
+    coordinates(
+        groupId = "io.github.konradjurkowski",
+        artifactId = "snackbarkmm",
+        version = "0.0.1"
+    )
+
+    pom {
+        name.set("SnackbarKMM")
+        description.set("A Kotlin Multiplatform Library")
+        inceptionYear.set("2024")
+        url.set("https://github.com/konradjurkowski/SnackbarKmm")
+
+        licenses {
+            license {
+                name.set("MIT")
+                url.set("https://opensource.org/licenses/MIT")
+            }
+        }
+
+        developers {
+            developer {
+                id.set("konradjurkowski")
+                name.set("Konrad Jurkowski")
+                email.set("konrad.jurkowski11@gmail.com")
+            }
+        }
+
+        scm {
+            url.set("https://github.com/konradjurkowski/SnackbarKmm")
+        }
+    }
+
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
 }
