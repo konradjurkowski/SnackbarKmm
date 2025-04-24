@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 fun SnackBarKMM(
     modifier: Modifier = Modifier,
     snackBarData: SnackBarData,
-    position: SnackBarPosition,
     onCloseClick: () -> Unit = {},
 ) {
     Row(
@@ -35,8 +34,8 @@ fun SnackBarKMM(
             .fillMaxWidth()
             .background(snackBarData.snackBarType.color)
             .padding(
-                top = if (position == SnackBarPosition.TOP) getStatusBarHeight() else 0.dp,
-                bottom = if (position == SnackBarPosition.BOTTOM) getNavigationBarHeight() else 0.dp,
+                top = if (snackBarData.position == SnackBarPosition.TOP) getStatusBarHeight() else 0.dp,
+                bottom = if (snackBarData.position == SnackBarPosition.BOTTOM) getNavigationBarHeight() else 0.dp,
             )
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -61,14 +60,14 @@ fun SnackBarKMM(
 }
 
 @Composable
-private fun getNavigationBarHeight(): Dp {
+fun getNavigationBarHeight(): Dp {
     val insets = WindowInsets.navigationBars
     val density = LocalDensity.current
     return with(density) { insets.getBottom(density).toDp() }
 }
 
 @Composable
-private fun getStatusBarHeight(): Dp {
+fun getStatusBarHeight(): Dp {
     val insets = WindowInsets.systemBars
     val density = LocalDensity.current
     return with(density) { insets.getTop(density).toDp() }

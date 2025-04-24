@@ -1,6 +1,7 @@
 package com.konradjurkowski.snackbarkmm
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,24 +23,18 @@ fun rememberSnackBarState(): SnackBarState {
 @Composable
 fun ContentWithSnackBar(
     snackBarState: SnackBarState,
-    position: SnackBarPosition = SnackBarPosition.TOP,
     snackBar: (@Composable (SnackBarData) -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         content()
-        SnackBarComponent(
-            snackBarState = snackBarState,
-            position = position,
-            snackBar = snackBar
-        )
+        SnackBarComponent(snackBarState = snackBarState, snackBar = snackBar)
     }
 }
 
 @Composable
 internal fun SnackBarComponent(
     snackBarState: SnackBarState,
-    position: SnackBarPosition,
     snackBar: (@Composable (SnackBarData) -> Unit)? = null,
 ) {
     var showMessageBar by remember { mutableStateOf(false) }
@@ -61,21 +56,24 @@ internal fun SnackBarComponent(
         )
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = if (position == SnackBarPosition.TOP)
-            Arrangement.Top else Arrangement.Bottom
-    ) {
-        AnimatedVisibility(
-            visible = snackBarState.data != null && showMessageBar,
-        ) {
-            snackBarState.data?.let { data ->
+    snackBarState.data?.let { data ->
+        AnimatedVisibility(visible = showMessageBar) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = if (data.position == SnackBarPosition.TOP) Arrangement.Top else Arrangement.Bottom,
+            ) {
                 if (snackBar != null) {
-                    snackBar(data)
+                    Box(
+                        modifier = Modifier
+                            .clickable {
+                                showMessageBar = false
+                                timerManager.cancelTimer()
+                            },
+                        content = { snackBar(data) },
+                    )
                 } else {
                     SnackBarKMM(
                         snackBarData = data,
-                        position = position,
                         onCloseClick = {
                             showMessageBar = false
                             timerManager.cancelTimer()
