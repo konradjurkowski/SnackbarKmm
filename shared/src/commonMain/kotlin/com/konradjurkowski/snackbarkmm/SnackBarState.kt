@@ -18,37 +18,71 @@ class SnackBarState {
         updated = 0
     }
 
-    fun showSuccess(message: String, duration: SnackBarDuration = SnackBarDuration.MEDIUM) {
-        showMessage(message, SnackBarType.SUCCESS, duration)
+    fun showSuccess(
+        message: String,
+        duration: SnackBarDuration = SnackBarDuration.MEDIUM,
+        position: SnackBarPosition = SnackBarPosition.TOP,
+    ) {
+        showMessage(message, SnackBarType.SUCCESS, duration, position)
     }
 
-    fun showError(message: String, duration: SnackBarDuration = SnackBarDuration.MEDIUM) {
-        showMessage(message, SnackBarType.ERROR, duration)
+    fun showError(
+        message: String,
+        duration: SnackBarDuration = SnackBarDuration.MEDIUM,
+        position: SnackBarPosition = SnackBarPosition.TOP,
+    ) {
+        showMessage(message, SnackBarType.ERROR, duration, position)
     }
 
-    fun showInfo(message: String, duration: SnackBarDuration = SnackBarDuration.MEDIUM) {
-        showMessage(message, SnackBarType.INFO, duration)
+    fun showInfo(
+        message: String,
+        duration: SnackBarDuration = SnackBarDuration.MEDIUM,
+        position: SnackBarPosition = SnackBarPosition.TOP,
+    ) {
+        showMessage(message, SnackBarType.INFO, duration, position)
     }
 
-    fun showSuccess(message: StringResource, duration: SnackBarDuration = SnackBarDuration.MEDIUM) {
-        showMessage(message, SnackBarType.SUCCESS, duration)
+    fun showSuccess(
+        message: StringResource,
+        duration: SnackBarDuration = SnackBarDuration.MEDIUM,
+        position: SnackBarPosition = SnackBarPosition.TOP,
+    ) {
+        showMessage(message, SnackBarType.SUCCESS, duration, position)
     }
 
-    fun showError(message: StringResource, duration: SnackBarDuration = SnackBarDuration.MEDIUM) {
-        showMessage(message, SnackBarType.ERROR, duration)
+    fun showError(
+        message: StringResource,
+        duration: SnackBarDuration = SnackBarDuration.MEDIUM,
+        position: SnackBarPosition = SnackBarPosition.TOP,
+    ) {
+        showMessage(message, SnackBarType.ERROR, duration, position)
     }
 
-    fun showInfo(message: StringResource, duration: SnackBarDuration = SnackBarDuration.MEDIUM) {
-        showMessage(message, SnackBarType.INFO, duration)
+    fun showInfo(
+        message: StringResource,
+        duration: SnackBarDuration = SnackBarDuration.MEDIUM,
+        position: SnackBarPosition = SnackBarPosition.TOP,
+    ) {
+        showMessage(message, SnackBarType.INFO, duration, position)
     }
 
-    private fun showMessage(message: String, type: SnackBarType, duration: SnackBarDuration) {
-        this.data = SnackBarData.SnackBarMessageData(message, type, duration)
+    private fun showMessage(
+        message: String,
+        type: SnackBarType,
+        duration: SnackBarDuration,
+        position: SnackBarPosition,
+    ) {
+        this.data = SnackBarData.SnackBarMessageData(message, type, duration, position)
         updated++
     }
 
-    private fun showMessage(message: StringResource, type: SnackBarType, duration: SnackBarDuration) {
-        this.data = SnackBarData.SnackBarResourceData(message, type, duration)
+    private fun showMessage(
+        message: StringResource,
+        type: SnackBarType,
+        duration: SnackBarDuration,
+        position: SnackBarPosition,
+    ) {
+        this.data = SnackBarData.SnackBarResourceData(message, type, duration, position)
         updated++
     }
 }
@@ -57,16 +91,16 @@ enum class SnackBarDuration(val durationTime: Long) {
     SHORT(2000L),
     MEDIUM(3500L),
     LONG(5000L),
-    EXTRA_LONG(8000L)
+    EXTRA_LONG(8000L),
 }
 
 enum class SnackBarType(val color: Color) {
     SUCCESS(Color(0xFF4A3FD1)),
     ERROR(Color(0xFFD13F51)),
-    INFO(Color(0xFFBED5E))
+    INFO(Color(0xFFBED5E)),
 }
 
 enum class SnackBarPosition {
     TOP,
-    BOTTOM
+    BOTTOM,
 }
