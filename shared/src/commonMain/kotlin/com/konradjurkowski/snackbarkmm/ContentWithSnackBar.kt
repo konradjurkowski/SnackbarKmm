@@ -1,6 +1,8 @@
 package com.konradjurkowski.snackbarkmm
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -57,10 +59,18 @@ internal fun SnackBarComponent(
     }
 
     snackBarState.data?.let { data ->
-        AnimatedVisibility(visible = showMessageBar) {
+        AnimatedVisibility(
+            visible = showMessageBar,
+            enter = slideInVertically(
+                initialOffsetY = { if (data.position.isTop()) -it else it },
+            ),
+            exit = slideOutVertically(
+                targetOffsetY = { if (data.position.isTop()) -it else it },
+            ),
+        ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = if (data.position == SnackBarPosition.TOP) Arrangement.Top else Arrangement.Bottom,
+                verticalArrangement = if (data.position.isTop()) Arrangement.Top else Arrangement.Bottom,
             ) {
                 if (snackBar != null) {
                     Box(

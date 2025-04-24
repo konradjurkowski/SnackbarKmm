@@ -102,5 +102,8 @@ enum class SnackBarType(val color: Color) {
 
 enum class SnackBarPosition {
     TOP,
-    BOTTOM,
+    BOTTOM;
+
+    fun isTop() = this == TOP
+    fun isBottom() = this == BOTTOM
 }
