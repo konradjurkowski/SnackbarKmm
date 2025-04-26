@@ -3,12 +3,12 @@ package com.konradjurkowski.snackbarkmm
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
@@ -27,13 +27,15 @@ fun rememberSnackBarState(): SnackBarState {
 
 @Composable
 fun ContentWithSnackBar(
-    snackBarState: SnackBarState,
     snackBar: (@Composable (SnackBarData) -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        content()
-        SnackBarComponent(snackBarState = snackBarState, snackBar = snackBar)
+    val snackBarState = rememberSnackBarState()
+    CompositionLocalProvider(LocalSnackbarState provides snackBarState) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            content()
+            SnackBarComponent(snackBarState = snackBarState, snackBar = snackBar)
+        }
     }
 }
 
@@ -76,14 +78,7 @@ internal fun SnackBarComponent(
                 verticalArrangement = if (data.position.isTop()) Arrangement.Top else Arrangement.Bottom,
             ) {
                 if (snackBar != null) {
-                    Box(
-                        modifier = Modifier
-                            .clickable {
-                                showMessageBar = false
-                                timerManager.cancelTimer()
-                            },
-                        content = { snackBar(data) },
-                    )
+                    snackBar(data)
                 } else {
                     SnackBarKMM(
                         snackBarData = data,
