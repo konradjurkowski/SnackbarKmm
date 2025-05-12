@@ -38,6 +38,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -61,7 +62,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.konradjurkowski",
         artifactId = "snackbarkmm",
-        version = "0.0.6"
+        version = "0.0.7"
     )
 
     pom {
