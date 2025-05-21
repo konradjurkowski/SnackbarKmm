@@ -1,5 +1,4 @@
-# SnackbarKMM
-
+# SnackbarKmm
 Step 1  
 Add the dependency in the `commonMain` section of your `build.gradle.kts` file
 
