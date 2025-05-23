@@ -68,7 +68,7 @@ mavenPublishing {
     pom {
         name.set("SnackbarKMM")
         description.set("A Kotlin Multiplatform Library")
-        inceptionYear.set("2024")
+        inceptionYear.set("2025")
         url.set("https://github.com/konradjurkowski/SnackbarKmm")
 
         licenses {
