@@ -62,7 +62,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.konradjurkowski",
         artifactId = "snackbarkmm",
-        version = "0.0.7"
+        version = "0.0.8"
     )
 
     pom {

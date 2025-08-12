@@ -6,7 +6,7 @@ Step 1
 Add the dependency in the `commonMain` section of your `build.gradle.kts` file
 
 ```groovy
-implementation("io.github.konradjurkowski:snackbarkmm:0.0.7")  
+implementation("io.github.konradjurkowski:snackbarkmm:0.0.8")  
 ```
 
 Step 2  
